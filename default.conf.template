@@ -1,0 +1,25 @@
+server {
+
+  server_name graceful_measure;
+  listen ${PORT} default_server;
+
+  location /api/ {
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection 'upgrade';
+      proxy_set_header Host $host;
+      proxy_cache_bypass $http_upgrade;
+      proxy_pass ${BACKEND};
+    }
+
+  location / {
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection 'upgrade';
+      proxy_set_header Host $host;
+      proxy_cache_bypass $http_upgrade;
+      proxy_pass ${FRONTEND};
+    }
+
+}
+
